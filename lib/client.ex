@@ -2,6 +2,7 @@ defmodule Afterbuy.Client do
   @moduledoc """
   HTTPoison Base extended client for Afterbuy API
   """
+  require Logger
   use HTTPoison.Base
   alias Afterbuy.XML.{Decoder, Encoder}
 
@@ -43,11 +44,21 @@ defmodule Afterbuy.Client do
     body
     |> Saxy.Builder.build()
     |> Encoder.encode!()
+    |> (fn data ->
+          Logger.debug(data)
+          data
+        end).()
   end
 
   @doc false
   def process_response_body(body) do
+    Logger.configure(truncate: :infinity)
+
     body
+    |> (fn data ->
+          Logger.debug(data)
+          data
+        end).()
     |> Decoder.decode!()
   end
 

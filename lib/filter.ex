@@ -40,33 +40,32 @@ defmodule Afterbuy.Filter do
     |> struct(Map.put(data, :name, name))
   end
 
-  defp get_el("values", v) do
-    case v do
-      v when not is_list(v) ->
-        get_el("values", [v])
+  defp get_el("Values", v) when not is_list(v),
+    do: get_el("Values", [v])
 
-      v ->
-        Enum.map(v, &get_el("value", &1))
-    end
-  end
+  defp get_el("Values", v),
+    do: Enum.map(v, &get_el("Value", &1))
 
   @doc false
-  defp get_el("name", v),
+  defp get_el("Name", v),
     do: element("FilterName", [], Inflex.camelize(v))
 
-  defp get_el("value", %NaiveDateTime{} = v),
+  defp get_el("Value", %NaiveDateTime{} = v),
     do:
       element(
         "FilterValue",
         [],
-        "#{v.day}.#{v.month}.#{v.year}" <> " #{v.hour}:#{v.minute}:#{v.second}"
+        Timex.format!(v, "{0D}.{0M}.{YYYY} {0h24}:{0m}:{0s}")
       )
 
-  defp get_el("value", v) when is_tuple(v),
+  defp get_el("Value", v) when is_tuple(v),
     do: element("FilterValue", [], v)
 
-  defp get_el("value", v),
+  defp get_el("Value", v),
     do: element("FilterValue", [], Afterbuy.XML.Encoder.sanitize(v))
+
+  defp get_el(k, v) when is_atom(k),
+    do: get_el(Inflex.camelize(k), v)
 
   defp get_el(k, v),
     do: element(Inflex.camelize(k), [], Afterbuy.XML.Encoder.sanitize(v))
@@ -96,13 +95,13 @@ defmodule Afterbuy.Filter do
     data_elements =
       data
       |> Map.from_struct()
-      |> Enum.filter(fn {k, v} -> not is_nil(v) and k != "name" end)
+      |> Enum.filter(fn {k, v} -> not is_nil(v) and k != :name end)
       |> Enum.reduce([], fn {k, v}, acc ->
         acc ++ List.flatten([get_el(k, v)])
       end)
 
     element("Filter", [], [
-      get_el("name", module.name),
+      get_el("Name", module.name),
       element("FilterValues", [], data_elements)
     ])
   end
@@ -144,29 +143,12 @@ defmodule Afterbuy.Filter do
       @spec name :: String.t()
       def name, do: __MODULE__ |> Module.split() |> List.last()
 
+      defimpl Saxy.Builder do
+        @doc false
+        def build(struct), do: Afterbuy.Filter.build(struct)
+      end
+
       defoverridable name: 0
     end
   end
-end
-
-defimpl Saxy.Builder,
-  for: [
-    Afterbuy.Filter.AfterbuyUserEmail,
-    Afterbuy.Filter.AfterbuyUserId,
-    Afterbuy.Filter.Anr,
-    Afterbuy.Filter.DateFilter,
-    Afterbuy.Filter.DefaultFilter,
-    Afterbuy.Filter.Ean,
-    Afterbuy.Filter.Level,
-    Afterbuy.Filter.OrderId,
-    Afterbuy.Filter.Platform,
-    Afterbuy.Filter.ProductId,
-    Afterbuy.Filter.RangeAnr,
-    Afterbuy.Filter.RangeId,
-    Afterbuy.Filter.ShopId,
-    Afterbuy.Filter.Tag,
-    Afterbuy.Filter.UserDefinedFlag
-  ] do
-  @doc false
-  def build(struct), do: Afterbuy.Filter.build(struct)
 end

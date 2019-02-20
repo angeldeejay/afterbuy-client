@@ -108,14 +108,27 @@ defimpl Afterbuy.XML.Encoder,
     NaiveDateTime,
     DateTime,
     Date,
-    Time
+    Time,
+    List
   ] do
   def encode!(data), do: Saxy.encode!(data)
 
-  def sanitize(v) when is_tuple(v) or is_list(v), do: v
+  def sanitize(v) when is_tuple(v), do: v
+
+  def sanitize(v) when is_list(v),
+    do: Enum.map(v, &sanitize/1)
 
   def sanitize(v) when is_atom(v),
     do: sanitize(Atom.to_string(v))
+
+  def sanitize(v) when is_float(v),
+    do: sanitize(Float.to_string(v))
+
+  def sanitize(v) when is_integer(v),
+    do: sanitize(Integer.to_string(v))
+
+  def sanitize(%NaiveDateTime{} = v),
+    do: Timex.format!(v, "{0D}.{0M}.{YYYY} {0h24}:{0m}:{0s}")
 
   def sanitize(v),
     do: {

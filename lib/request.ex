@@ -73,7 +73,7 @@ defmodule Afterbuy.Request do
     allowed = get_restriction(r.global, :params)
 
     if name in allowed do
-      %{r | filters: r.filters ++ [Param.new(name, data)]}
+      %{r | parameters: r.parameters ++ [Param.new(name, data)]}
     else
       raise ArgumentError,
         message:
@@ -141,8 +141,33 @@ defmodule Afterbuy.Request do
     import Saxy.XML
     alias Saxy.Builder
 
+    defp build_attribute(attribute, nil) do
+      raise ArgumentError,
+        message: "The attribute #{attribute} can't be nil"
+    end
+
+    defp build_attribute(:global, data) do
+      [Builder.build(data)]
+    end
+
+    defp build_attribute(:parameters, data) do
+      data
+      |> Enum.map(fn item ->
+        Builder.build(item)
+      end)
+    end
+
+    defp build_attribute(:filters, data) do
+      [element("DataFilter", [], Enum.map(data, &Builder.build/1))]
+    end
+
     def build(%{__struct__: _module} = struct) do
-      nodelist = [Builder.build(struct.global)]
+      nodelist =
+        [:global, :parameters, :filters]
+        |> Enum.reduce([], fn attribute, acc ->
+          acc ++ build_attribute(attribute, Map.get(struct, attribute))
+        end)
+
       element("Request", [], nodelist)
     end
   end
