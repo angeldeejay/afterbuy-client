@@ -10,7 +10,7 @@ defmodule Afterbuy.Request.GetSoldItems do
       :order_id,
       :platform,
       :range_id,
-      :default_filter,
+      :default_filter_multiple,
       :afterbuy_user_id,
       :user_defined_flag,
       :afterbuy_user_email,
