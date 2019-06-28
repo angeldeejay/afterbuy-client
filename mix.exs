@@ -19,7 +19,7 @@ defmodule Afterbuy.MixProject do
   def project do
     [
       app: :afterbuy,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.7",
       build_embedded: Mix.env() == :prod,
       description: description(),
@@ -41,9 +41,9 @@ defmodule Afterbuy.MixProject do
   defp deps do
     [
       {:erlsom, "~> 1.5"},
-      {:ex_doc, "~> 0.18", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:httpoison, "~> 0.13"},
-      {:inflex, "~> 1.10"},
+      {:inflex, "~> 2.0"},
       {:saxy, "~> 0.9.0"}
     ]
   end
