@@ -16,8 +16,11 @@ defmodule Afterbuy.Client do
 
   See `request/5` for more detailed information.
   """
-  def post(body, headers \\ [], options \\ []),
+  def post(body, headers \\ [], options \\ []) when is_map(body),
     do: request(:post, nil, body, headers, options)
+
+  def post(url, body, headers, options),
+    do: super(url, body, headers, options)
 
   @doc """
   Issues a POST request using default [Afterbuy API URL](#{@default_url}),
@@ -27,12 +30,16 @@ defmodule Afterbuy.Client do
 
   See `request!/5` for more detailed information.
   """
-  def post!(body, headers \\ [], options \\ []),
+  def post!(body, headers \\ [], options \\ []) when is_map(body),
     do: request!(:post, nil, body, headers, options)
+
+  def post(url, body, headers, options),
+    do: super(url, body, headers, options)
 
   @doc false
   def process_url(""), do: @default_url
   def process_url(nil), do: @default_url
+  def process_url(url), do: url
 
   @doc false
   def process_request_headers(_) do
