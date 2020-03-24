@@ -8,37 +8,8 @@ defmodule Afterbuy.Client do
 
   @default_url "https://api.afterbuy.de/afterbuy/ABInterface.aspx"
 
-  @doc """
-  Issues a POST request using default [Afterbuy API URL](#{@default_url}).
-
-  Returns `{:ok, response}` if the request is successful, `{:error, reason}`
-  otherwise.
-
-  See `request/5` for more detailed information.
-  """
-  def post(body, headers \\ [], options \\ []) when is_map(body),
-    do: post(nil, body, headers, options)
-
-  def post(url, body, headers, options),
-    do: super(url, body, headers, options)
-
-  @doc """
-  Issues a POST request using default [Afterbuy API URL](#{@default_url}),
-  raising an exception in case of failure.
-
-  If the request does not fail, the response is returned.
-
-  See `request!/5` for more detailed information.
-  """
-  def post!(body, headers \\ [], options \\ []) when is_map(body),
-    do: post!(nil, body, headers, options)
-
-  def post(url, body, headers, options),
-    do: super(url, body, headers, options)
-
   @doc false
-  def process_url(""), do: @default_url
-  def process_url(nil), do: @default_url
+  def process_url(url) when url in ["", nil], do: @default_url
   def process_url(url), do: url
 
   @doc false

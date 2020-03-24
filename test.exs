@@ -11,5 +11,5 @@ global = %Global{
   error_language: "en"
 }
 
-# Client.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
-Client.post!(Request.new(%{global | call_name: "GetShopProducts"}))
+Client.post!(nil, Request.new(%{global | call_name: "GetShopProducts"}))
+Client.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
