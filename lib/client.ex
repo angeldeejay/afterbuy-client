@@ -17,7 +17,7 @@ defmodule Afterbuy.Client do
   See `request/5` for more detailed information.
   """
   def post(body, headers \\ [], options \\ []) when is_map(body),
-    do: request(:post, nil, body, headers, options)
+    do: post(nil, body, headers, options)
 
   def post(url, body, headers, options),
     do: super(url, body, headers, options)
@@ -31,7 +31,7 @@ defmodule Afterbuy.Client do
   See `request!/5` for more detailed information.
   """
   def post!(body, headers \\ [], options \\ []) when is_map(body),
-    do: request!(:post, nil, body, headers, options)
+    do: post!(nil, body, headers, options)
 
   def post(url, body, headers, options),
     do: super(url, body, headers, options)
