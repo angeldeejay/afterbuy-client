@@ -1,6 +1,6 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
-use Mix.Config
+import Config
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
@@ -18,7 +18,7 @@ use Mix.Config
 #
 # You can also configure a third-party app:
 #
-#     config :logger, level: :info
+# config :logger, level: :info
 #
 
 # It is also possible to import configuration files, relative to this
@@ -27,4 +27,9 @@ use Mix.Config
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env()}.exs"
+
+config :tesla, Afterbuy.Tesla.Client,
+  base_url: "https://api.afterbuy.de/afterbuy/ABInterface.aspx"
+
+if File.exists?("#{Mix.env()}.exs"),
+  do: import_config "#{Mix.env()}.exs"

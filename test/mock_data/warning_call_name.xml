@@ -1,0 +1,15 @@
+<Afterbuy>
+    <CallStatus>Warning</CallStatus>
+    <CallName>GetShopProducts</CallName>
+    <Result>
+      <AfterbuyTimeStamp>07.05.2006 12:08:03</AfterbuyTimeStamp>
+      <AfterbuyUniversalTimeStamp>07.05.2006 10:08:03</AfterbuyUniversalTimeStamp>
+      <WarningList>
+        <Warning>
+          <WarningCode>1</WarningCode>
+          <WarningDescription>Es ist ein unbekannter Fehler unerwartet aufgetreten.</WarningDescription>
+          <WarningLongDescription>Es ist ein unbekannter Fehler unerwartet ...</WarningLongDescription>
+        </Warning>
+      </WarningList>
+    </Result>
+</Afterbuy>

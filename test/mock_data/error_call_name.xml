@@ -1,0 +1,13 @@
+<Afterbuy>
+  <CallStatus>Error</CallStatus>
+  <CallName>ErrorCallName</CallName>
+  <Result>
+    <ErrorList>
+      <Error>
+        <ErrorCode>999</ErrorCode>
+        <ErrorDescription>Diese Funktion ist vorübergehend nicht erreichbar.</ErrorDescription>
+        <ErrorLongDescription>Diese Funktion ist vorübergehend ...</ErrorLongDescription>
+      </Error>
+    </ErrorList>
+  </Result>
+</Afterbuy>

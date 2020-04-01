@@ -3,7 +3,7 @@ defmodule Afterbuy.Request do
   Afterbuy request caller. Performs XML serialization
   to post to Afterbuy API
 
-      alias Afterbuy.Client
+      alias Afterbuy.HTTPoison.Client
       alias Afterbuy.Global
       alias Afterbuy.Request
 
@@ -135,6 +135,16 @@ defmodule Afterbuy.Request do
       def allowed_params, do: @allowed_params
       def allowed_filters, do: @allowed_filters
     end
+  end
+
+  defimpl Afterbuy.XML.Encoder do
+    def encode!(data),
+      do:
+        data
+        |> Saxy.Builder.build()
+        |> Saxy.encode!
+
+    def sanitize(data), do: data
   end
 
   defimpl Saxy.Builder do

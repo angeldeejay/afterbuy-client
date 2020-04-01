@@ -1,4 +1,4 @@
-defmodule Afterbuy.Client do
+defmodule Afterbuy.HTTPoison.Client do
   @moduledoc """
   HTTPoison Base extended client for Afterbuy API
   """

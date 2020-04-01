@@ -1,4 +1,5 @@
-alias Afterbuy.Client
+alias Afterbuy.HTTPoison.Client, as: HTTPoisonClient
+alias Afterbuy.Tesla.Client, as: TeslaClient
 alias Afterbuy.Global
 alias Afterbuy.Request
 
@@ -11,5 +12,8 @@ global = %Global{
   error_language: "en"
 }
 
-Client.post!(nil, Request.new(%{global | call_name: "GetShopProducts"}))
-Client.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
+TeslaClient.post!(nil, Request.new(%{global | call_name: "GetShopProducts"}))
+TeslaClient.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
+
+# HTTPoisonClient.post!(nil, Request.new(%{global | call_name: "GetShopProducts"}))
+# HTTPoisonClient.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
