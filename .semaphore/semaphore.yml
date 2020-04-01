@@ -12,6 +12,7 @@ blocks:
           commands:
             - sem-version elixir 1.9
             - checkout
+            - mix local.rebar --force
             - mix deps.get
             - mix test
       env_vars:

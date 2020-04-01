@@ -1,4 +1,4 @@
-# Afterbuy
+# Afterbuy [![Test Results](https://angeldeejay.semaphoreci.com/badges/afterbuy-client.svg)]()
 
 Afterbuy client for elixir
 
