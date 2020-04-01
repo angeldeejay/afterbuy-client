@@ -5,10 +5,10 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: mix test
+  - name: Testing
     task:
       jobs:
-        - name: mix deps.get
+        - name: Unit testing
           commands:
             - sem-version elixir 1.9
             - checkout
