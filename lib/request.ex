@@ -142,7 +142,7 @@ defmodule Afterbuy.Request do
       do:
         data
         |> Saxy.Builder.build()
-        |> Saxy.encode!
+        |> Saxy.encode!()
 
     def sanitize(data), do: data
   end

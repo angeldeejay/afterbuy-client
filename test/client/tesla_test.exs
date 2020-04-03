@@ -16,20 +16,19 @@ defmodule AfterbuyTest.Client.TeslaTest do
           |> Path.join("mock_data")
           |> Path.join([filename, ".xml"])
           |> File.read!()
-          |> Decoder.decode!
+          |> Decoder.decode!()
 
         %Tesla.Env{status: 200, body: contents}
     end)
 
-    global =
-      %Global{
-        partner_id: "MY-PARTNER-ID",
-        partner_token: "MY-PARTNER-TOKEN",
-        account_token: "MY-ACCOUNT-TOKEN",
-        call_name: nil,
-        detail_level: "0",
-        error_language: "en"
-      }
+    global = %Global{
+      partner_id: "MY-PARTNER-ID",
+      partner_token: "MY-PARTNER-TOKEN",
+      account_token: "MY-ACCOUNT-TOKEN",
+      call_name: nil,
+      detail_level: "0",
+      error_language: "en"
+    }
 
     {:ok, global: global}
   end
@@ -42,6 +41,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
       |> Map.get("Afterbuy")
 
     assert response["CallStatus"] == "Success"
+
     response
     |> Map.get("Result")
     |> Map.has_key?("Products")
@@ -56,6 +56,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
       |> Map.get("Afterbuy")
 
     assert response["CallStatus"] == "Warning"
+
     response
     |> Map.get("Result")
     |> Map.has_key?("WarningList")
@@ -70,6 +71,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
       |> Map.get("Afterbuy")
 
     assert response["CallStatus"] == "Error"
+
     response
     |> Map.get("Result")
     |> Map.has_key?("ErrorList")

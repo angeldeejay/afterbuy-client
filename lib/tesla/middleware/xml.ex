@@ -19,7 +19,6 @@ defmodule Afterbuy.Tesla.Middleware.Xml do
   - `:encode_content_type` - content-type to be used in request header
   - `:decode_content_types` - list of additional decodable content-types
   """
-
   @behaviour Tesla.Middleware
 
   alias Afterbuy.Request, as: AfterbuyRequest

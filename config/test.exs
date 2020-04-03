@@ -6,7 +6,6 @@ config :logger, level: :info
 
 config :tesla, Afterbuy.Tesla.Client,
   adapter: Tesla.Mock,
-  base_url:
-    fn env, _ ->
-      env.body.global.call_name
-    end
+  base_url: fn env, _ ->
+    env.body.global.call_name
+  end

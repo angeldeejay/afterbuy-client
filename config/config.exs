@@ -32,4 +32,4 @@ config :tesla, Afterbuy.Tesla.Client,
   base_url: "https://api.afterbuy.de/afterbuy/ABInterface.aspx"
 
 if File.exists?("#{Mix.env()}.exs"),
-  do: import_config "#{Mix.env()}.exs"
+  do: import_config("#{Mix.env()}.exs")

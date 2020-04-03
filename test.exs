@@ -12,8 +12,22 @@ global = %Global{
   error_language: "en"
 }
 
-TeslaClient.post!(nil, Request.new(%{global | call_name: "GetShopProducts"}))
-TeslaClient.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
+request =
+  %{global | call_name: "GetShopProducts"}
+  |> Request.new()
+  |> Request.add_params(%{
+    max_shop_items: 3,
+    pagination_enabled: 1,
+    page_number: 1
+  })
+  |> Request.add_filter(:date_filter, %{
+    values: ["ModDate"],
+    date_from: NaiveDateTime.from_erl!({{2020, 1, 1}, {0, 0, 0}}),
+    date_to: NaiveDateTime.utc_now()
+  })
 
-# HTTPoisonClient.post!(nil, Request.new(%{global | call_name: "GetShopProducts"}))
-# HTTPoisonClient.post!("https://www.google.com.co", Request.new(%{global | call_name: "GetShopProducts"}))
+TeslaClient.post!(nil, request)
+# TeslaClient.post!("https://www.google.com.co", request)
+
+# HTTPoisonClient.post!(nil, request)
+# HTTPoisonClient.post!("https://www.google.com.co", request)
