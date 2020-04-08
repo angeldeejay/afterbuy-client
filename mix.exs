@@ -19,7 +19,7 @@ defmodule Afterbuy.MixProject do
   def project do
     [
       app: :afterbuy,
-      version: "1.0.7",
+      version: "1.0.8",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,

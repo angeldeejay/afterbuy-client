@@ -24,7 +24,12 @@ defmodule Afterbuy.Tesla.Middleware.Url do
     if is_valid?(env.url) do
       env
     else
-      ex = %TeslaError{message: "Invalid URL (#{inspect(env.url)})", env: env}
+      ex = %TeslaError{
+        message: "Invalid URL (#{inspect(env.url)})",
+        # Avoid to show your payloads!
+        env: %{env | body: "[FILTERED]"}
+      }
+
       Logger.error(Exception.format(:error, ex), location: :afterbuy_client_dependency)
       throw(ex)
     end
