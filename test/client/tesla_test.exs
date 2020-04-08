@@ -9,7 +9,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
 
   setup do
     Tesla.Mock.mock(fn
-      %{method: :post, url: filename} ->
+      %{method: :post, url: "https://afterbuy-mock.com/" <> filename} ->
         contents =
           __DIR__
           |> Path.join("..")
@@ -35,7 +35,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
 
   test "success call", %{global: global} do
     response =
-      "success_call_name"
+      "https://afterbuy-mock.com/success_call_name"
       |> Client.post!(Request.new(%{global | call_name: "success_call_name"}))
       |> Map.get(:body)
       |> Map.get("Afterbuy")
@@ -50,7 +50,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
 
   test "warning call", %{global: global} do
     response =
-      "warning_call_name"
+      "https://afterbuy-mock.com/warning_call_name"
       |> Client.post!(Request.new(%{global | call_name: "warning_call_name"}))
       |> Map.get(:body)
       |> Map.get("Afterbuy")
@@ -65,7 +65,7 @@ defmodule AfterbuyTest.Client.TeslaTest do
 
   test "error call", %{global: global} do
     response =
-      "error_call_name"
+      "https://afterbuy-mock.com/error_call_name"
       |> Client.post!(Request.new(%{global | call_name: "error_call_name"}))
       |> Map.get(:body)
       |> Map.get("Afterbuy")

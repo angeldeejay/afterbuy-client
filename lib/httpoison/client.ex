@@ -6,12 +6,6 @@ defmodule Afterbuy.HTTPoison.Client do
   use HTTPoison.Base
   alias Afterbuy.XML.{Decoder, Encoder}
 
-  @default_url "https://api.afterbuy.de/afterbuy/ABInterface.aspx"
-
-  @doc false
-  def process_url(url) when url in ["", nil], do: @default_url
-  def process_url(url), do: url
-
   @doc false
   def process_request_headers(_) do
     [{"Content-Type", "text/xml"}]
