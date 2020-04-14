@@ -45,5 +45,5 @@ defmodule Afterbuy.Tesla.Middleware.Url do
     end
   end
 
-  defp is_valid?(url), do: false
+  defp is_valid?(_), do: false
 end

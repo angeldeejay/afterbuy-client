@@ -101,6 +101,7 @@ defmodule Afterbuy.Tesla.Middleware.Logger do
     end
   end
 
+  @debug_encrypted_body "(filtered)"
   @debug_no_body "(no body)"
   @debug_stream "[Elixir.Stream]"
 
@@ -130,6 +131,16 @@ defmodule Afterbuy.Tesla.Middleware.Logger do
       stringify(error)
     ]
   end
+
+  defp stringify(%Afterbuy.Request{} = body),
+    do:
+      inspect(%{
+        body
+        | global:
+            Enum.reduce(~w(partner_id partner_token account_token)a, body.global, fn k, acc ->
+              Map.put(acc, k, @debug_encrypted_body)
+            end)
+      })
 
   defp stringify(nil), do: @debug_no_body
   defp stringify([]), do: @debug_no_body
