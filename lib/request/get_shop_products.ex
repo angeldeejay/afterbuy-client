@@ -16,6 +16,7 @@ defmodule Afterbuy.Request.GetShopProducts do
       :level,
       :range_id,
       :range_anr,
-      :date_filter
+      :date_filter,
+      :default_filter_multiple
     ]
 end
